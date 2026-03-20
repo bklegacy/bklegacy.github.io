@@ -38,23 +38,59 @@ nav{
     background:#ffffff;
     border-bottom:1px solid #e0e0e0;
     z-index:999;
-    flex-wrap:wrap;
 }
 
 .logo{
     height:75px;
 }
 
-nav ul{
+/* DESKTOP MENU */
+.desktop-menu{
     list-style:none;
     display:flex;
     gap:25px;
 }
 
-nav ul li a{
+.desktop-menu li a{
     text-decoration:none;
     color:#0b3c5d;
     font-weight:500;
+}
+
+/* HAMBURGER */
+.menu-btn{
+    font-size:28px;
+    cursor:pointer;
+    display:none;
+}
+
+/* SIDE MENU */
+.side-menu{
+    position:fixed;
+    top:0;
+    right:-260px;
+    width:260px;
+    height:100%;
+    background:#0b3c5d;
+    padding:30px 20px;
+    display:flex;
+    flex-direction:column;
+    transition:0.3s;
+    z-index:1000;
+}
+
+.side-menu a{
+    color:white;
+    text-decoration:none;
+    margin:15px 0;
+    font-size:18px;
+}
+
+.close-btn{
+    font-size:28px;
+    color:white;
+    align-self:flex-end;
+    cursor:pointer;
 }
 
 /* HERO */
@@ -97,8 +133,6 @@ header{
     border:2px solid white;
     color:white;
     text-decoration:none;
-    transition:0.3s;
-    font-weight:500;
 }
 
 .btn:hover{
@@ -108,7 +142,6 @@ header{
 
 .call-btn{
     margin-top:15px;
-    display:inline-block;
     padding:12px 25px;
     background:#0b3c5d;
     color:white;
@@ -124,13 +157,11 @@ section{
 h2{
     color:#0b3c5d;
     margin-bottom:20px;
-    font-size:2rem;
 }
 
 .about{
     max-width:800px;
     line-height:1.8;
-    color:#555;
 }
 
 /* CARDS */
@@ -145,18 +176,7 @@ h2{
     background:white;
     border:1px solid #ddd;
     padding:30px;
-    transition:0.3s;
     border-radius:10px;
-}
-
-.card:hover{
-    box-shadow:0 5px 20px rgba(0,0,0,0.08);
-    transform:translateY(-4px);
-}
-
-.card h3{
-    color:#0b3c5d;
-    margin-bottom:15px;
 }
 
 /* CONTACT */
@@ -165,14 +185,6 @@ h2{
     color:white;
     text-align:center;
     padding:60px 10%;
-}
-
-.contact h2{
-    color:white;
-}
-
-.contact p{
-    margin-top:15px;
 }
 
 /* WHATSAPP */
@@ -185,35 +197,17 @@ h2{
     font-size:22px;
     padding:12px 15px;
     border-radius:50%;
-    text-decoration:none;
-}
-
-/* FOOTER */
-footer{
-    text-align:center;
-    padding:25px;
-    background:#ffffff;
-    color:#666;
 }
 
 /* MOBILE */
 @media (max-width:768px){
 
-    nav{
-        padding:12px 5%;
-        flex-direction:column;
-        align-items:flex-start;
+    .menu-btn{
+        display:block;
     }
 
-    .logo{
-        height:55px;
-        margin-bottom:10px;
-    }
-
-    nav ul{
-        width:100%;
-        justify-content:space-around;
-        gap:10px;
+    .desktop-menu{
+        display:none;
     }
 
     header{
@@ -236,8 +230,11 @@ footer{
 <body>
 
 <nav>
-    <img src="logo.png" class="logo" alt="BK Legacy Logo">
-    <ul>
+    <img src="logo.png" class="logo">
+
+    <div class="menu-btn" onclick="openMenu()">☰</div>
+
+    <ul class="desktop-menu">
         <li><a href="#">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#divisions">Divisions</a></li>
@@ -245,6 +242,16 @@ footer{
         <li><a href="#contact">Contact</a></li>
     </ul>
 </nav>
+
+<!-- SIDE MENU -->
+<div class="side-menu" id="menu">
+    <span class="close-btn" onclick="closeMenu()">×</span>
+    <a href="#" onclick="closeMenu()">Home</a>
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#divisions" onclick="closeMenu()">Divisions</a>
+    <a href="https://vrishabhaproperties.github.io/" target="_blank">Properties</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
 
 <header>
     <div class="main-title">
@@ -271,85 +278,50 @@ footer{
 <section id="about">
     <h2>About The Legacy</h2>
     <p class="about">
-        Boovanahalli Kantharaju Legacy represents a forward-thinking real estate and business group focused on long-term growth, integrity, and value creation.
+        Boovanahalli Kantharaju Legacy represents a forward-thinking real estate group focused on trust and growth.
     </p>
 </section>
 
 <section id="divisions">
     <h2>Our Divisions</h2>
-
     <div class="cards">
         <div class="card">
-            <h3>Vrishabha Properties (Official Listings Platform)</h3>
-            <p>Explore all our property listings and deals.</p>
+            <h3>Vrishabha Properties</h3>
+            <p>Official listings platform.</p>
         </div>
-
         <div class="card">
             <h3>BK Legacy Developments</h3>
-            <p>Premium layouts and development projects.</p>
+            <p>Premium layouts and projects.</p>
         </div>
-
         <div class="card">
-            <h3>Business & Investments</h3>
-            <p>Strategic investment opportunities.</p>
+            <h3>Investments</h3>
+            <p>Strategic opportunities.</p>
         </div>
     </div>
-</section>
-
-<section>
-    <h2>Explore Properties</h2>
-    <p class="about">
-        Browse our latest listings through our official platform.
-    </p>
-    <a href="https://vrishabhaproperties.github.io/" class="btn" target="_blank">
-        Visit Vrishabha Properties
-    </a>
-</section>
-
-<section>
-    <h2>Why Choose Us</h2>
-    <div class="cards">
-        <div class="card">
-            <h3>Trusted Deals</h3>
-            <p>Clear and verified documentation.</p>
-        </div>
-
-        <div class="card">
-            <h3>Prime Locations</h3>
-            <p>High-growth investment areas.</p>
-        </div>
-
-        <div class="card">
-            <h3>Full Support</h3>
-            <p>End-to-end assistance.</p>
-        </div>
-    </div>
-</section>
-
-<section>
-    <h2>Founder</h2>
-    <p class="about">
-        Founded by Vishwanath Gowda B K with a vision to build trust-driven real estate ventures.
-    </p>
 </section>
 
 <section id="contact" class="contact">
     <h2>Contact Us</h2>
     <p>Hassan, Karnataka</p>
-    <p>Email: boovanahallykantharajulegacy@gmail.com</p>
     <p>
-        <strong>Phone:</strong> 
-        <a href="tel:+919449384643" style="color:white;">+91 94493 84643</a> |
-        <a href="tel:+918217816168" style="color:white;">+91 8217816168</a>
+        <a href="tel:+919449384643" style="color:white;">+91 94493 84643</a>
     </p>
 </section>
 
 <footer>
-    © 2026 Boovanahalli Kantharaju Legacy
+    © 2026 B K Legacy
 </footer>
 
-<a href="https://wa.me/919449384643?text=Hi%20I%20am%20interested%20in%20your%20properties"
-class="whatsapp" target="_blank">💬</a>
+<a href="https://wa.me/919449384643" class="whatsapp">💬</a>
+
+<script>
+function openMenu(){
+    document.getElementById("menu").style.right = "0";
+}
+function closeMenu(){
+    document.getElementById("menu").style.right = "-260px";
+}
+</script>
 
 </body>
 </html>
