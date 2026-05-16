@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B K Legacy — Developers, Realtors & Investors | Hassan, Karnataka</title>
+<link rel="icon" type="image/png" href="logo-round.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════
+   RESET & VARIABLES
+══════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+:root {
+  --gold:      #B8862A;
+  --gold-lt:   #D4A843;
+  --gold-pale: #F5E6C0;
+  --cream:     #FBF7EE;
+  --cream2:    #F2EAD8;
+  --brown:     #4A3520;
+  --brown-lt:  #7A5C38;
+  --dark:      #1C1409;
+  --white:     #FFFFFF;
+  --text:      #2C2015;
+  --text-lt:   #5A4832;
+  --border:    rgba(184,134,42,.18);
+  --ease:      cubic-bezier(.65,0,.35,1);
+}
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+img { max-width:100%; display:block; }
+a { transition: color .25s, opacity .25s; }
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:900;
+  background: var(--white);
+  border-bottom: 2px solid var(--gold-pale);
+  padding: 0 5%;
+  display: flex; align-items:center; justify-content:space-between;
+  height: 80px;
+  box-shadow: 0 2px 20px rgba(0,0,0,.07);
+  transition: height .3s var(--ease), box-shadow .3s;
+}
+nav.compact { height: 64px; box-shadow: 0 4px 24px rgba(0,0,0,.10); }
+
+.logo { height: 56px; transition: height .3s var(--ease); }
+nav.compact .logo { height: 44px; }
+
+.desktop-menu {
+  list-style: none;
+  display: flex; gap: 0;
+}
+.desktop-menu li a {
+  display: block;
+  font-size: 15px; font-weight: 600; letter-spacing: .04em;
+  color: var(--text); text-decoration: none;
+  padding: .5rem 1.1rem;
+  border-radius: 6px;
+  transition: background .2s, color .2s;
+}
+.desktop-menu li a:hover {
+  background: var(--gold-pale);
+  color: var(--gold);
+}
+
+.nav-call-btn {
+  display: flex; align-items:center; gap: .5rem;
+  font-size: 15px; font-weight: 700;
+  background: var(--gold); color: var(--white);
+  padding: .65rem 1.4rem; border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(184,134,42,.35);
+  transition: background .25s, transform .2s, box-shadow .2s;
+  white-space: nowrap;
+}
+.nav-call-btn:hover {
+  background: var(--gold-lt);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(184,134,42,.45);
+}
+
+/* hamburger */
+.menu-btn {
+  display: none; flex-direction:column; gap: 6px;
+  background: none; border: none; cursor: pointer; padding: .4rem;
+}
+.menu-btn span {
+  display: block; width: 28px; height: 2px;
+  background: var(--gold); border-radius: 2px;
+  transition: all .35s var(--ease);
+}
+.menu-btn.open span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
+.menu-btn.open span:nth-child(2){ opacity:0; transform:scaleX(0); }
+.menu-btn.open span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
+
+/* side drawer */
+.side-overlay {
+  display:none; position:fixed; inset:0; z-index:990;
+  background: rgba(28,20,9,.55); backdrop-filter:blur(3px);
+}
+.side-overlay.open { display:block; }
+
+.side-menu {
+  position:fixed; top:0; right:-100%; width:min(300px,85%); height:100%;
+  background: var(--white);
+  border-left: 3px solid var(--gold-pale);
+  padding: 6rem 2rem 2rem;
+  display:flex; flex-direction:column;
+  transition: right .45s var(--ease);
+  z-index:1000;
+  box-shadow: -8px 0 40px rgba(0,0,0,.12);
+}
+.side-menu.open { right:0; }
+
+.side-menu a {
+  font-size: 20px; font-weight: 700;
+  color: var(--text); text-decoration:none;
+  padding: .9rem 1rem;
+  border-bottom: 1px solid var(--cream2);
+  border-radius: 8px;
+  transition: background .2s, color .2s, padding-left .25s var(--ease);
+}
+.side-menu a:hover { background:var(--gold-pale); color:var(--gold); padding-left:1.6rem; }
+.side-menu .side-call {
+  margin-top: 1.5rem;
+  background: var(--gold); color: var(--white);
+  text-align:center; border-radius: 50px; border-bottom:none;
+  font-size: 18px;
+}
+.side-menu .side-call:hover { background: var(--gold-lt); padding-left:1rem; }
+
+.close-btn {
+  position:absolute; top:1.2rem; right:1.2rem;
+  background: var(--cream2); border: none; border-radius:50%;
+  width:42px; height:42px; font-size:1.4rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  color: var(--brown); transition:background .2s;
+}
+.close-btn:hover { background: var(--gold-pale); }
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+header {
+  min-height: 100vh;
+  display: flex; flex-direction:column; justify-content:center; align-items:flex-start;
+  padding: 120px 5% 80px;
+  position: relative; overflow:hidden;
+}
+
+.hero-bg {
+  position:absolute; inset:0; z-index:0;
+  background:
+    linear-gradient(105deg, rgba(28,20,9,.78) 0%, rgba(28,20,9,.45) 55%, rgba(28,20,9,.65) 100%),
+    url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=80');
+  background-size:cover; background-position:center;
+  animation: zoomBg 16s ease-out forwards;
+}
+@keyframes zoomBg { from{transform:scale(1.06)} to{transform:scale(1)} }
+
+/* warm gold gradient overlay at bottom */
+.hero-bg::after {
+  content:'';
+  position:absolute; bottom:0; left:0; right:0; height:220px;
+  background: linear-gradient(to top, var(--dark), transparent);
+}
+
+.hero-content {
+  position:relative; z-index:2;
+  width:100%; max-width:820px;
+}
+
+.hero-tag {
+  display: inline-flex; align-items:center; gap:.5rem;
+  background: rgba(184,134,42,.25);
+  border: 1px solid rgba(184,134,42,.4);
+  color: var(--gold-pale);
+  font-size: 13px; font-weight: 600; letter-spacing:.1em; text-transform:uppercase;
+  padding: .4rem .9rem; border-radius:50px; margin-bottom:1.4rem;
+  opacity:0; animation: riseUp .7s .2s forwards;
+  white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis;
+}
+.hero-tag span { color:var(--gold-lt); }
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 8.5vw, 6.5rem);
+  font-weight: 900; line-height: 1.05;
+  color: var(--white);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  opacity:0; animation: riseUp .85s .4s forwards;
+}
+.hero-title .italic { font-style:italic; color: var(--gold-lt); }
+.hero-title .light { font-weight:400; }
+
+.hero-divider {
+  width: 60px; height: 3px; border-radius:3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+  margin: 1.2rem 0;
+  opacity:0; animation: riseUp .7s .6s forwards;
+}
+
+.hero-sub {
+  font-size: clamp(14px, 3.5vw, 20px); font-weight: 400;
+  color: rgba(251,247,238,.78);
+  opacity:0; animation: riseUp .7s .7s forwards;
+  line-height:1.6;
+}
+
+.hero-btns {
+  display: flex; gap:.8rem; flex-wrap:wrap; margin-top:1.8rem;
+  opacity:0; animation: riseUp .7s .9s forwards;
+}
+
+.btn-hero-primary {
+  display: inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  font-size: 16px; font-weight: 700;
+  background: var(--gold); color: var(--white);
+  padding: .8rem 1.6rem; border-radius:50px; text-decoration:none;
+  box-shadow: 0 6px 24px rgba(184,134,42,.45);
+  transition: background .25s, transform .2s, box-shadow .2s;
+  white-space:nowrap;
+}
+.btn-hero-primary:hover {
+  background: var(--gold-lt); transform:translateY(-3px);
+  box-shadow: 0 10px 30px rgba(184,134,42,.5);
+}
+
+.btn-hero-outline {
+  display: inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  font-size: 16px; font-weight: 600;
+  border: 2px solid rgba(255,255,255,.5); color: var(--white);
+  padding: .8rem 1.6rem; border-radius:50px; text-decoration:none;
+  transition: background .25s, border-color .25s, transform .2s;
+  white-space:nowrap;
+}
+.btn-hero-outline:hover {
+  background: rgba(255,255,255,.12); border-color:rgba(255,255,255,.75);
+  transform:translateY(-3px);
+}
+
+/* trust badges */
+.hero-trust {
+  display: flex; gap:.8rem; flex-wrap:wrap; margin-top:1.8rem;
+  opacity:0; animation: riseUp .7s 1.1s forwards;
+}
+.trust-badge {
+  display:flex; align-items:center; gap:.4rem;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  padding: .45rem .85rem; border-radius:8px;
+  font-size: 13px; font-weight:600; color:rgba(255,255,255,.85);
+  white-space:nowrap;
+}
+.trust-badge .ico { font-size:15px; }
+
+@keyframes riseUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:none; }
+}
+
+/* ══════════════════════════════════════
+   BAND / TICKER
+══════════════════════════════════════ */
+.band {
+  background: var(--gold);
+  padding: .85rem 0; overflow:hidden;
+}
+.band-track {
+  display:flex; width:max-content;
+  animation: scroll 20s linear infinite;
+}
+.band-track span {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight:700; letter-spacing:.1em;
+  color: var(--dark); white-space:nowrap; padding: 0 2.5rem;
+}
+.band-track .dot { color:rgba(28,20,9,.35); }
+@keyframes scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ══════════════════════════════════════
+   SECTION BASE
+══════════════════════════════════════ */
+section { padding: 80px 5%; }
+
+.sec-eyebrow {
+  display: inline-flex; align-items:center; gap:.65rem;
+  font-size: 13px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+  color: var(--gold); margin-bottom:1rem;
+}
+.sec-eyebrow::before {
+  content:''; display:block; width:22px; height:2px;
+  background: var(--gold); border-radius:2px; flex-shrink:0;
+}
+
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 4vw, 3rem); font-weight:700; line-height:1.15;
+  color: var(--brown); margin-bottom: 1.2rem;
+}
+.sec-title em { color:var(--gold); font-style:italic; }
+
+.sec-body {
+  font-size: 17px; line-height:1.85; color: var(--text-lt);
+  max-width:640px;
+}
+
+/* ══════════════════════════════════════
+   ABOUT
+══════════════════════════════════════ */
+#about { background: var(--white); }
+
+.about-grid {
+  max-width:1200px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center;
+}
+
+.about-body p {
+  font-size: 17px; line-height:1.9; color:var(--text-lt); margin-bottom:1.2rem;
+}
+
+.about-highlight {
+  margin-top:2rem;
+  background: var(--cream); border-left:4px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  padding: 1.4rem 1.6rem;
+}
+.about-highlight p {
+  font-size: 17px; line-height:1.85; color:var(--brown); font-style:italic;
+  margin:0;
+}
+
+.about-img-col { position:relative; }
+
+.about-img-box {
+  border-radius:16px; overflow:hidden;
+  box-shadow: 0 24px 60px rgba(184,134,42,.18);
+  aspect-ratio:4/5;
+  background: var(--cream2);
+  position:relative;
+}
+/* decorative pattern inside box */
+.about-img-box::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 20px,
+      rgba(184,134,42,.06) 20px, rgba(184,134,42,.06) 21px);
+}
+.about-img-box::after {
+  content:'BK';
+  position:absolute; bottom:1.5rem; right:1.5rem;
+  font-family:'Playfair Display',serif; font-size:6rem; font-weight:900;
+  color:rgba(184,134,42,.10); line-height:1;
+}
+
+/* floating pill */
+.about-pill {
+  position:absolute; bottom:-1.5rem; left:-1.5rem;
+  background: var(--gold); color:var(--white);
+  padding:1rem 1.6rem; border-radius:14px;
+  box-shadow: 0 8px 30px rgba(184,134,42,.4);
+}
+.about-pill .pill-num {
+  font-family:'Playfair Display',serif;
+  font-size:2rem; font-weight:900; line-height:1;
+}
+.about-pill .pill-lbl {
+  font-size:13px; font-weight:600; opacity:.85; margin-top:.2rem;
+}
+
+/* about stats row */
+.about-stats {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:.8rem; margin-top:2.5rem;
+}
+.astat {
+  background:var(--cream); border-radius:12px; padding:1.2rem 1rem;
+  text-align:center; border:1px solid var(--cream2);
+  transition:box-shadow .25s, transform .25s;
+}
+.astat:hover { box-shadow:0 8px 24px rgba(184,134,42,.12); transform:translateY(-3px); }
+.astat-n {
+  font-family:'Playfair Display',serif;
+  font-size:1.7rem; font-weight:700; color:var(--gold);
+}
+.astat-l { font-size:12px; font-weight:600; color:var(--text-lt); letter-spacing:.05em; margin-top:.2rem; }
+
+/* ══════════════════════════════════════
+   DIVISIONS
+══════════════════════════════════════ */
+#divisions { background:var(--cream); }
+
+.div-intro { max-width:700px; margin-bottom:3.5rem; }
+.div-intro p { font-size:17px; line-height:1.85; color:var(--text-lt); margin-top:.8rem; }
+
+.cards {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.5rem; margin-top:0;
+}
+
+.card {
+  background:var(--white);
+  border-radius:16px;
+  border:2px solid transparent;
+  padding:2.5rem 2rem;
+  box-shadow:0 4px 20px rgba(0,0,0,.06);
+  transition:border-color .3s, box-shadow .3s, transform .3s var(--ease);
+  position:relative; overflow:hidden;
+}
+.card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:4px;
+  background:linear-gradient(90deg, var(--gold), var(--gold-lt));
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .45s var(--ease);
+}
+.card:hover {
+  border-color:var(--gold-pale);
+  box-shadow: 0 16px 48px rgba(184,134,42,.16);
+  transform:translateY(-6px);
+}
+.card:hover::before { transform:scaleX(1); }
+
+.card-icon {
+  font-size:2.4rem; margin-bottom:1.2rem;
+  background:var(--cream); width:60px; height:60px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+}
+.card-num {
+  font-family:'Playfair Display',serif;
+  font-size:3rem; font-weight:900; color:var(--gold-pale);
+  position:absolute; top:1.5rem; right:1.5rem; line-height:1;
+}
+.card h3 {
+  font-family:'Playfair Display',serif;
+  font-size:1.25rem; font-weight:700; color:var(--brown);
+  margin-bottom:.8rem;
+}
+.card p { font-size:16px; line-height:1.85; color:var(--text-lt); margin-bottom:1.2rem; }
+.card ul { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
+.card ul li {
+  font-size:15px; font-weight:600; color:var(--brown-lt);
+  display:flex; align-items:center; gap:.6rem;
+}
+.card ul li::before {
+  content:'✓'; color:var(--gold); font-size:14px; font-weight:700;
+  flex-shrink:0;
+}
+
+/* ══════════════════════════════════════
+   LEADERSHIP
+══════════════════════════════════════ */
+#leadership { background:var(--white); }
+
+.lead-intro { max-width:600px; margin-bottom:3.5rem; }
+
+.leader-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:2rem; max-width:1200px;
+}
+
+.leader-card {
+  background:var(--cream); border-radius:20px;
+  border:2px solid var(--cream2);
+  padding:2.5rem;
+  transition:box-shadow .3s, border-color .3s, transform .3s var(--ease);
+}
+.leader-card:hover {
+  box-shadow:0 20px 56px rgba(184,134,42,.14);
+  border-color:var(--gold-pale);
+  transform:translateY(-4px);
+}
+
+.leader-top {
+  display:flex; align-items:center; gap:1.3rem; margin-bottom:1.8rem;
+  padding-bottom:1.5rem;
+  border-bottom:2px solid var(--cream2);
+}
+
+.founder-img {
+  width:100px; height:100px; border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--gold-pale);
+  box-shadow:0 6px 20px rgba(184,134,42,.2);
+  flex-shrink:0;
+  transition:border-color .3s, transform .4s var(--ease);
+}
+.leader-card:hover .founder-img {
+  border-color:var(--gold);
+  transform:scale(1.05);
+}
+
+.founder-name {
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem; font-weight:700; color:var(--brown); line-height:1.2;
+  margin-bottom:.4rem;
+}
+.founder-role {
+  display:inline-block;
+  font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--gold); background:var(--gold-pale);
+  padding:.25rem .75rem; border-radius:50px;
+}
+
+.legacy-text {
+  font-size:16px; line-height:1.9; color:var(--text-lt);
+}
+.legacy-text em {
+  font-family:'Playfair Display',serif; font-style:italic;
+  color:var(--brown); font-size:17px; display:block;
+  margin-top:1rem; padding:1rem 1.2rem;
+  background:var(--white); border-left:3px solid var(--gold); border-radius:0 8px 8px 0;
+}
+.legacy-text strong { color:var(--brown); font-weight:700; }
+
+/* ══════════════════════════════════════
+   CONTACT
+══════════════════════════════════════ */
+#contact { background:var(--dark); }
+
+.contact-wrap {
+  max-width:1200px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1.1fr; gap:5rem; align-items:start;
+}
+
+#contact .sec-eyebrow { color:var(--gold-lt); }
+#contact .sec-title { color:var(--white); }
+
+.contact-note {
+  font-size:17px; line-height:1.8; color:rgba(251,247,238,.6);
+  margin-top:1rem; max-width:480px;
+}
+
+.c-items { margin-top:2.5rem; display:flex; flex-direction:column; gap:0; }
+
+.c-item {
+  display:flex; align-items:flex-start; gap:1.2rem;
+  padding:1.3rem 0;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.c-item:first-child { border-top:1px solid rgba(255,255,255,.07); }
+
+.c-icon-wrap {
+  width:46px; height:46px; border-radius:12px; flex-shrink:0;
+  background:rgba(184,134,42,.18);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+}
+.c-label {
+  font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--gold-lt); margin-bottom:.4rem;
+}
+.c-value {
+  font-size:17px; font-weight:600; color:var(--white); line-height:1.6;
+}
+.c-value a { color:var(--gold-pale); text-decoration:none; }
+.c-value a:hover { color:var(--gold-lt); }
+
+.contact-map-side {}
+.map-title {
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem; font-weight:700; color:var(--white); margin-bottom:1.2rem;
+}
+.contact-map-side iframe {
+  width:100%; height:320px; border:none; display:block;
+  border-radius:16px;
+  border:2px solid rgba(184,134,42,.2);
+  filter:grayscale(50%) brightness(.85);
+  transition:filter .4s;
+}
+.contact-map-side iframe:hover { filter:grayscale(10%) brightness(.95); }
+
+/* CTA box */
+.contact-cta {
+  margin-top:2.5rem;
+  background:rgba(184,134,42,.12);
+  border:1px solid rgba(184,134,42,.25);
+  border-radius:14px; padding:1.6rem;
+  display:flex; flex-direction:column; gap:.8rem;
+}
+.contact-cta p { font-size:15px; color:rgba(251,247,238,.6); margin:0; }
+.contact-cta-btns { display:flex; gap:.8rem; flex-wrap:wrap; }
+.cta-btn {
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:15px; font-weight:700;
+  background:var(--gold); color:var(--white);
+  padding:.7rem 1.4rem; border-radius:50px; text-decoration:none;
+  transition:background .25s, transform .2s;
+}
+.cta-btn:hover { background:var(--gold-lt); transform:translateY(-2px); }
+.cta-btn.outline {
+  background:transparent; border:2px solid rgba(184,134,42,.4);
+  color:var(--gold-pale);
+}
+.cta-btn.outline:hover { background:rgba(184,134,42,.12); border-color:var(--gold); }
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer {
+  background: #130E06;
+  border-top:1px solid rgba(184,134,42,.15);
+  padding:1.8rem 5%;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;
+}
+.foot-logo {
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem; font-weight:700; color:var(--gold);
+}
+.foot-copy { font-size:14px; color:rgba(255,255,255,.3); font-weight:400; }
+
+/* ══════════════════════════════════════
+   WHATSAPP
+══════════════════════════════════════ */
+.whatsapp {
+  position:fixed; bottom:1.5rem; right:1.5rem; z-index:800;
+  background:#25D366; color:var(--white);
+  width:58px; height:58px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem; text-decoration:none;
+  box-shadow:0 6px 24px rgba(37,211,102,.45);
+  animation:wglow 2.5s ease-in-out infinite;
+}
+@keyframes wglow {
+  0%,100%{box-shadow:0 6px 20px rgba(37,211,102,.35);}
+  50%{box-shadow:0 6px 36px rgba(37,211,102,.65);}
+}
+
+/* ══════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════ */
+.reveal {
+  opacity:0; transform:translateY(30px);
+  transition:opacity .75s var(--ease), transform .75s var(--ease);
+}
+.reveal.d1 { transition-delay:.1s; }
+.reveal.d2 { transition-delay:.2s; }
+.reveal.d3 { transition-delay:.3s; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+
+/* Tablet */
+@media(max-width:1024px){
+  .about-grid { grid-template-columns:1fr; gap:2.5rem; }
+  .about-img-col { display:none; }
+  .cards { grid-template-columns:1fr 1fr; }
+  .leader-grid { grid-template-columns:1fr; gap:1.5rem; }
+  .contact-wrap { grid-template-columns:1fr; gap:3rem; }
+}
+
+/* Mobile */
+@media(max-width:768px){
+  /* NAV */
+  .desktop-menu, .nav-call-btn { display:none; }
+  .menu-btn { display:flex; }
+  nav { height:64px; padding:0 4%; }
+  .logo { height:42px; }
+  nav.compact { height:56px; }
+  nav.compact .logo { height:38px; }
+
+  /* HERO */
+  header {
+    padding: 84px 5% 52px;
+    min-height: 100svh;
+    justify-content: flex-end;
+  }
+  .hero-content { width:100%; max-width:100%; }
+  .hero-tag {
+    font-size:12px; padding:.35rem .8rem;
+    margin-bottom:1rem;
+  }
+  .hero-title {
+    font-size: clamp(1.75rem, 8vw, 2.6rem);
+    line-height:1.1;
+    word-break:normal;
+    overflow-wrap:break-word;
+  }
+  .hero-divider { margin:.9rem 0; width:44px; }
+  .hero-sub { font-size:14px; line-height:1.55; }
+  .hero-btns {
+    margin-top:1.3rem; gap:.7rem;
+    flex-direction:column; align-items:flex-start;
+  }
+  .btn-hero-primary, .btn-hero-outline {
+    font-size:15px; padding:.75rem 1.4rem;
+    width:100%; max-width:260px; justify-content:center;
+  }
+  .hero-trust {
+    margin-top:1.3rem; gap:.5rem;
+    flex-wrap:wrap;
+  }
+  .trust-badge { font-size:12px; padding:.35rem .7rem; }
+
+  /* SECTIONS */
+  section { padding:52px 5%; }
+
+  /* CARDS */
+  .cards { grid-template-columns:1fr; gap:1rem; }
+  .card { padding:2rem 1.5rem; }
+
+  /* ABOUT STATS */
+  .about-stats { grid-template-columns:1fr 1fr 1fr; gap:.6rem; }
+  .astat { padding:.9rem .6rem; }
+  .astat-n { font-size:1.3rem; }
+  .astat-l { font-size:11px; }
+
+  /* LEADERSHIP */
+  .leader-card { padding:1.8rem 1.4rem; }
+  .leader-top { gap:1rem; }
+  .founder-img { width:80px; height:80px; }
+  .founder-name { font-size:1.05rem; }
+  .legacy-text { font-size:15px; }
+
+  /* CONTACT */
+  .contact-cta-btns { flex-direction:column; }
+  .cta-btn { justify-content:center; text-align:center; }
+
+  /* FOOTER */
+  footer {
+    flex-direction:column; text-align:center;
+    gap:.5rem; padding:1.4rem 5%;
+  }
+}
+
+/* Small phones */
+@media(max-width:390px){
+  .hero-title { font-size:clamp(1.6rem,7.5vw,2.2rem); }
+  .hero-tag { font-size:11px; }
+  .about-stats { grid-template-columns:1fr 1fr; }
+  .trust-badge { font-size:11px; padding:.3rem .6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <a href="#"><img src="logo.png" class="logo" alt="B K Legacy"></a>
+
+  <ul class="desktop-menu">
+    <li><a href="#">Home</a></li>
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#divisions">Divisions</a></li>
+    <li><a href="#leadership">Our Leadership</a></li>
+    <li><a href="https://vrishabhaproperties.github.io/" target="_blank">Properties</a></li>
+    <li><a href="#contact">Contact Us</a></li>
+  </ul>
+
+  <a href="tel:+918217816168" class="nav-call-btn">📞 Call Now</a>
+
+  <button class="menu-btn" id="menuBtn" onclick="openMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="side-overlay" id="sideOverlay" onclick="closeMenu()"></div>
+<div class="side-menu" id="menu">
+  <button class="close-btn" onclick="closeMenu()">✕</button>
+  <a href="#" onclick="closeMenu()">🏠 Home</a>
+  <a href="#about" onclick="closeMenu()">ℹ️ About Us</a>
+  <a href="#divisions" onclick="closeMenu()">🏗️ Divisions</a>
+  <a href="#leadership" onclick="closeMenu()">👤 Our Leadership</a>
+  <a href="https://vrishabhaproperties.github.io/" target="_blank">🏡 Properties</a>
+  <a href="#contact" onclick="closeMenu()">📍 Contact Us</a>
+  <a href="tel:+918217816168" class="side-call" onclick="closeMenu()">📞 Call Now</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<header>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+
+    <div class="hero-tag">
+      <span>📍</span> Hassan, Karnataka
+    </div>
+
+    <h1 class="hero-title">
+      Boovanahalli<br>
+      <span class="italic">Kantharaju</span><br>
+      <span class="light">Legacy</span>
+    </h1>
+
+    <div class="hero-divider"></div>
+
+    <p class="hero-sub">
+      Developers · Realtors · Entrepreneurs · Investors
+    </p>
+
+    <div class="hero-btns">
+      <a href="https://vrishabhaproperties.github.io/" class="btn-hero-primary" target="_blank">
+        🏡 View Properties
+      </a>
+      <a href="tel:+918217816168" class="btn-hero-outline">
+        📞 Call Now
+      </a>
+    </div>
+
+    <div class="hero-trust">
+      <div class="trust-badge"><span class="ico">✅</span> Verified Listings</div>
+      <div class="trust-badge"><span class="ico">🤝</span> Trusted Since 2026</div>
+      <div class="trust-badge"><span class="ico">📋</span> End-to-End Support</div>
+    </div>
+
+  </div>
+</header>
+
+<!-- ══ BAND ══ -->
+<div class="band" aria-hidden="true">
+  <div class="band-track">
+    <span>Vrishabha Properties</span><span class="dot"> ✦ </span>
+    <span>BK Legacy Developments</span><span class="dot"> ✦ </span>
+    <span>Business &amp; Investments</span><span class="dot"> ✦ </span>
+    <span>Hassan, Karnataka</span><span class="dot"> ✦ </span>
+    <span>Integrity &amp; Trust</span><span class="dot"> ✦ </span>
+    <span>Verified Listings</span><span class="dot"> ✦ </span>
+    <!-- duplicate for loop -->
+    <span>Vrishabha Properties</span><span class="dot"> ✦ </span>
+    <span>BK Legacy Developments</span><span class="dot"> ✦ </span>
+    <span>Business &amp; Investments</span><span class="dot"> ✦ </span>
+    <span>Hassan, Karnataka</span><span class="dot"> ✦ </span>
+    <span>Integrity &amp; Trust</span><span class="dot"> ✦ </span>
+    <span>Verified Listings</span><span class="dot"> ✦ </span>
+  </div>
+</div>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-body reveal">
+      <div class="sec-eyebrow">Our Story</div>
+      <h2 class="sec-title">About The <em>Legacy</em></h2>
+
+      <p>Boovanahalli Kantharaju Legacy is a tribute to the values and vision of Late Boovanahalli Kantharaju, whose life was defined by integrity, hard work, and trust. Though he is no longer with us, his principles continue to guide every step we take.</p>
+
+      <p>Carrying this legacy forward, we are committed to building a strong and reliable presence in the real estate sector, rooted in transparency and long-term value creation. With a deep understanding of the local market in Hassan and surrounding regions, we aim to provide dependable solutions for both investors and homebuyers.</p>
+
+      <div class="about-highlight">
+        <p>Through our platform, Vrishabha Properties, we offer verified listings, honest guidance, and complete support — from site visits to registration. Our goal is not just to close transactions, but to build lasting relationships based on trust.</p>
+      </div>
+
+      <div class="about-stats">
+        <div class="astat reveal d1">
+          <div class="astat-n">3</div>
+          <div class="astat-l">Divisions</div>
+        </div>
+        <div class="astat reveal d2">
+          <div class="astat-n">100%</div>
+          <div class="astat-l">Verified</div>
+        </div>
+        <div class="astat reveal d3">
+          <div class="astat-n">Hassan</div>
+          <div class="astat-l">Karnataka</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-img-col reveal d2">
+      <div class="about-img-box"></div>
+      <div class="about-pill">
+        <div class="pill-num">BK</div>
+        <div class="pill-lbl">Legacy Est. 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DIVISIONS ══ -->
+<section id="divisions">
+  <div class="div-intro reveal">
+    <div class="sec-eyebrow">What We Do</div>
+    <h2 class="sec-title">Our <em>Divisions</em></h2>
+    <p>At B K Legacy, our operations are structured into specialized divisions — each focused on delivering excellence across different areas of real estate and business, providing end-to-end solutions with transparency and long-term value.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card reveal">
+      <div class="card-icon">🏡</div>
+      <div class="card-num">01</div>
+      <h3>Vrishabha Properties</h3>
+      <p>Our official property listing and brokerage platform — offering verified residential and commercial properties with complete support from selection to registration.</p>
+      <ul>
+        <li>Verified Property Listings</li>
+        <li>Site Visits &amp; Consultation</li>
+        <li>End-to-End Transaction Support</li>
+      </ul>
+    </div>
+
+    <div class="card reveal d1">
+      <div class="card-icon">🏗️</div>
+      <div class="card-num">02</div>
+      <h3>BK Legacy Developments</h3>
+      <p>Planning and executing premium layouts and land development in high-growth locations — built on strategic planning, infrastructure, and long-term value appreciation.</p>
+      <ul>
+        <li>Layout Development</li>
+        <li>Land Structuring &amp; Planning</li>
+        <li>Future-Ready Projects</li>
+      </ul>
+    </div>
+
+    <div class="card reveal d2">
+      <div class="card-icon">📈</div>
+      <div class="card-num">03</div>
+      <h3>Business &amp; Investments</h3>
+      <p>Identifying and executing strategic investment opportunities across real estate and emerging sectors — building a diversified portfolio for consistent long-term returns.</p>
+      <ul>
+        <li>Real Estate Investments</li>
+        <li>Business Ventures</li>
+        <li>Long-Term Value Creation</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LEADERSHIP ══ -->
+<section id="leadership">
+  <div class="lead-intro reveal">
+    <div class="sec-eyebrow">The People</div>
+    <h2 class="sec-title">Our <em>Leadership</em></h2>
+  </div>
+
+  <div class="leader-grid">
+    <div class="leader-card reveal">
+      <div class="leader-top">
+        <img src="founder.png" class="founder-img" alt="Vishwanath Gowda">
+        <div>
+          <div class="founder-name">Vishwanath Gowda</div>
+          <div class="founder-role">Founder &amp; Proprietor</div>
+        </div>
+      </div>
+      <p class="legacy-text">
+        B K Legacy was founded by Vishwanath Gowda with a clear focus on building a dependable and value-driven presence in real estate. With strong practical experience and a deep understanding of local market dynamics, the approach is centered on identifying the right opportunities and evaluating properties based on real potential.<br><br>
+        Every decision is backed by careful analysis, on-ground insights, and attention to detail — from selecting properties to ensuring smooth and transparent transactions. The focus is always on clarity, consistency, and long-term value.
+        <em>"Real estate is not just about transactions — it's about making the right decisions at the right time, with a clear understanding of value, risk, and future potential."</em>
+      </p>
+    </div>
+
+    <div class="leader-card reveal d1">
+      <div class="leader-top">
+        <img src="father.png" class="founder-img" alt="Sri Boovanahalli Kantharaju">
+        <div>
+          <div class="founder-name">Sri Boovanahalli Kantharaju</div>
+          <div class="founder-role">Inspiration Behind the Name</div>
+        </div>
+      </div>
+      <p class="legacy-text">
+        The name "B K Legacy" is a tribute to <strong>Sri Boovanahalli Kantharaju</strong>. He was a farmer, involved in real estate, and active in public life and politics. His values continue to inspire the vision behind our brand.<br><br>
+        His life — rooted in the soil, guided by integrity, and dedicated to his community — remains the living compass of everything we build at B K Legacy. We honour his memory by upholding the standards he set and carrying his vision forward.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="reveal">
+      <div class="sec-eyebrow">Reach Us</div>
+      <h2 class="sec-title">Contact <em>Us</em></h2>
+      <p class="contact-note">For property inquiries, site visits, or investment opportunities, feel free to contact us anytime. We are always happy to help.</p>
+
+      <div class="c-items">
+        <div class="c-item">
+          <div class="c-icon-wrap">📍</div>
+          <div>
+            <div class="c-label">Location</div>
+            <div class="c-value">Hassan, Karnataka</div>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon-wrap">📞</div>
+          <div>
+            <div class="c-label">Phone</div>
+            <div class="c-value">
+              <a href="tel:+919449384643">+91 94493 84643</a><br>
+              <a href="tel:+918217816168">+91 82178 16168</a>
+            </div>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon-wrap">✉️</div>
+          <div>
+            <div class="c-label">Email</div>
+            <div class="c-value">
+              <a href="mailto:boovanahallykantharajulegacy@gmail.com">boovanahallykantharajulegacy@gmail.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-cta">
+        <p>Ready to find your property? Get in touch now.</p>
+        <div class="contact-cta-btns">
+          <a href="tel:+919449384643" class="cta-btn">📞 Call +91 94493 84643</a>
+          <a href="https://wa.me/919449384643" class="cta-btn outline" target="_blank">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-map-side reveal d1">
+      <div class="map-title">Find Us in Hassan</div>
+      <iframe
+        src="https://maps.google.com/maps?q=Hassan Karnataka&t=&z=13&ie=UTF8&iwloc=&output=embed"
+        title="Hassan Karnataka Map" loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="foot-logo">B K Legacy</div>
+  <p class="foot-copy">© 2026 B K Legacy · Hassan, Karnataka</p>
+  <p class="foot-copy">Integrity · Trust · Long-Term Value</p>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/919449384643" class="whatsapp" target="_blank" aria-label="Chat on WhatsApp">💬</a>
+
+<script>
+/* NAV compact on scroll */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('compact', window.scrollY > 70);
+}, { passive:true });
+
+/* Mobile menu */
+const menuBtn     = document.getElementById('menuBtn');
+const sideMenu    = document.getElementById('menu');
+const sideOverlay = document.getElementById('sideOverlay');
+
+function openMenu(){
+  sideMenu.classList.add('open');
+  sideOverlay.classList.add('open');
+  menuBtn.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeMenu(){
+  sideMenu.classList.remove('open');
+  sideOverlay.classList.remove('open');
+  menuBtn.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* Scroll reveal */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('visible'); }
+  });
+}, { threshold:0.08, rootMargin:'0px 0px -30px 0px' });
+revealEls.forEach(el => revealObs.observe(el));
+</script>
+
+</body>
+</html>
